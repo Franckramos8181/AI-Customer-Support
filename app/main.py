@@ -4,11 +4,12 @@ from fastapi.templating import Jinja2Templates
 
 from app.config import settings
 from app.database import init_db
-from app.routers import messages
+from app.routers import messages, knowledge
 
 app = FastAPI(title=settings.app_title, version="0.1.0")
 
 app.include_router(messages.router)
+app.include_router(knowledge.router)
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="app/templates")
