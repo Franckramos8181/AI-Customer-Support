@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}{{ conversation.subject }} - AI Klantenservice{% endblock %}
+
+{% block content %}
+<div class="conversation-detail">
+    <div class="conv-detail-header">
+        <a href="/dashboard" class="back-link">&larr; Terug naar overzicht</a>
+        <h2>{{ conversation.subject }}</h2>
+        <div class="conv-info">
+            <span><strong>Klant:</strong> {{ conversation.customer_name }}</span>
+            <span><strong>E-mail:</strong> {{ conversation.customer_email }}</span>
+            <span class="status-badge status-{{ conversation.status }}">{{ conversation.status }}</span>
+        </div>
+    </div>
+
+    <div class="messages-container">
+        {% for message in conversation.messages %}
+        <div class="message message-{{ message.sender_type }}">
+            <div class="message-header">
+                <span class="sender">
+                    {% if message.sender_type == 'customer' %}
+                        Klant
+                    {% else %}
+                        Medewerker
+                    {% endif %}
+                </span>
+                <span class="message-time">{{ message.created_at.strftime('%d-%m-%Y %H:%M') }}</span>
+            </div>
+            <div class="message-body">
+                {{ message.content }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="draft-section">
+        <h3>AI Concept Antwoord</h3>
+
+        {% if drafts %}
+        {% for draft in drafts %}
+        <div class="draft-card draft-{{ draft.status }}">
+            <div class="draft-header">
+                <span class="confidence">Vertrouwensscore: {{ draft.confidence_score }}%</span>
+                <span class="draft-status status-badge">{{ draft.status }}</span>
+            </div>
+            <div class="draft-content">
+                {{ draft.edited_content or draft.content }}
+            </div>
+            {% if draft.status == 'pending' %}
+            <div class="draft-actions">
+                <button onclick="approveDraft({{ draft.id }})" class="btn btn-approve">Goedkeuren & Versturen</button>
+                <button onclick="showEditForm({{ draft.id }})" class="btn btn-edit">Bewerken</button>
+                <button onclick="rejectDraft({{ draft.id }})" class="btn btn-reject">Afwijzen</button>
+            </div>
+            <div id="edit-form-{{ draft.id }}" class="edit-form" style="display: none;">
+                <textarea id="edit-content-{{ draft.id }}" rows="6">{{ draft.content }}</textarea>
+                <button onclick="submitEdit({{ draft.id }})" class="btn btn-approve">Opslaan</button>
+                <button onclick="hideEditForm({{ draft.id }})" class="btn btn-cancel">Annuleren</button>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+        {% else %}
+        <button onclick="generateDraft({{ conversation.id }})" class="btn btn-generate">
+            AI Antwoord Genereren
+        </button>
+        {% endif %}
+    </div>
+</div>
+
+{% block scripts %}
+<script>
+async function generateDraft(conversationId) {
+    const response = await fetch(`/api/drafts/generate/${conversationId}`, { method: 'POST' });
+    if (response.ok) {
+        window.location.reload();
+    } else {
+        alert('Fout bij het genereren van het concept antwoord.');
+    }
+}
+
+async function approveDraft(draftId) {
+    const response = await fetch(`/api/drafts/${draftId}/approve?reviewed_by=dashboard_agent`, { method: 'POST' });
+    if (response.ok) {
+        window.location.reload();
+    }
+}
+
+async function rejectDraft(draftId) {
+    const response = await fetch(`/api/drafts/${draftId}/reject?reviewed_by=dashboard_agent`, { method: 'POST' });
+    if (response.ok) {
+        window.location.reload();
+    }
+}
+
+function showEditForm(draftId) {
+    document.getElementById(`edit-form-${draftId}`).style.display = 'block';
+}
+
+function hideEditForm(draftId) {
+    document.getElementById(`edit-form-${draftId}`).style.display = 'none';
+}
+
+async function submitEdit(draftId) {
+    const content = document.getElementById(`edit-content-${draftId}`).value;
+    const response = await fetch(
+        `/api/drafts/${draftId}/edit?edited_content=${encodeURIComponent(content)}&reviewed_by=dashboard_agent`,
+        { method: 'POST' }
+    );
+    if (response.ok) {
+        window.location.reload();
+    }
+}
+</script>
+{% endblock %}
+{% endblock %}

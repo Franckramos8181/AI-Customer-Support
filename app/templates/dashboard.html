@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - AI Klantenservice{% endblock %}
+
+{% block content %}
+<div class="dashboard-header">
+    <h2>Gesprekken Overzicht</h2>
+    <div class="stats-bar">
+        <div class="stat-card">
+            <span class="stat-number">{{ stats.total }}</span>
+            <span class="stat-label">Totaal</span>
+        </div>
+        <div class="stat-card stat-open">
+            <span class="stat-number">{{ stats.open }}</span>
+            <span class="stat-label">Open</span>
+        </div>
+        <div class="stat-card stat-progress">
+            <span class="stat-number">{{ stats.in_progress }}</span>
+            <span class="stat-label">In Behandeling</span>
+        </div>
+        <div class="stat-card stat-resolved">
+            <span class="stat-number">{{ stats.resolved }}</span>
+            <span class="stat-label">Opgelost</span>
+        </div>
+    </div>
+</div>
+
+<div class="filter-bar">
+    <a href="/dashboard" class="filter-btn {% if not current_filter %}active{% endif %}">Alle</a>
+    <a href="/dashboard?status=open" class="filter-btn {% if current_filter == 'open' %}active{% endif %}">Open</a>
+    <a href="/dashboard?status=in_progress" class="filter-btn {% if current_filter == 'in_progress' %}active{% endif %}">In Behandeling</a>
+    <a href="/dashboard?status=resolved" class="filter-btn {% if current_filter == 'resolved' %}active{% endif %}">Opgelost</a>
+</div>
+
+<div class="conversation-list">
+    {% for conv in conversations %}
+    <div class="conversation-card" onclick="window.location='/dashboard/conversation/{{ conv.id }}'">
+        <div class="conv-header">
+            <h3>{{ conv.subject }}</h3>
+            <span class="status-badge status-{{ conv.status }}">{{ conv.status }}</span>
+        </div>
+        <div class="conv-meta">
+            <span class="customer-name">{{ conv.customer_name }}</span>
+            <span class="customer-email">{{ conv.customer_email }}</span>
+            <span class="conv-date">{{ conv.created_at.strftime('%d-%m-%Y %H:%M') }}</span>
+        </div>
+        <div class="conv-preview">
+            {{ conv.messages[-1].content[:150] if conv.messages else 'Geen berichten' }}...
+        </div>
+    </div>
+    {% endfor %}
+
+    {% if not conversations %}
+    <div class="empty-state">
+        <p>Geen gesprekken gevonden.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
