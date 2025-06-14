@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}Te Beoordelen - AI Klantenservice{% endblock %}
+
+{% block content %}
+<div class="review-page">
+    <h2>Concept Antwoorden Te Beoordelen</h2>
+
+    {% if pending_drafts %}
+    <div class="pending-list">
+        {% for draft in pending_drafts %}
+        <div class="review-card">
+            <div class="review-header">
+                <h3>{{ draft.conversation.subject }}</h3>
+                <div class="review-meta">
+                    <span class="customer-info">{{ draft.conversation.customer_name }}</span>
+                    <span class="confidence confidence-{{ 'high' if draft.confidence_score >= 80 else 'medium' if draft.confidence_score >= 60 else 'low' }}">
+                        Vertrouwen: {{ draft.confidence_score }}%
+                    </span>
+                </div>
+            </div>
+
+            <div class="review-context">
+                <h4>Laatste bericht van klant:</h4>
+                <div class="customer-message">
+                    {{ draft.conversation.messages[-1].content if draft.conversation.messages else 'Geen bericht' }}
+                </div>
+            </div>
+
+            <div class="review-draft">
+                <h4>AI Concept Antwoord:</h4>
+                <div class="draft-text">
+                    {{ draft.content }}
+                </div>
+            </div>
+
+            <div class="review-actions">
+                <button onclick="approveDraft({{ draft.id }})" class="btn btn-approve">
+                    Goedkeuren & Versturen
+                </button>
+                <button onclick="toggleEdit({{ draft.id }})" class="btn btn-edit">
+                    Bewerken
+                </button>
+                <button onclick="rejectDraft({{ draft.id }})" class="btn btn-reject">
+                    Afwijzen
+                </button>
+                <a href="/dashboard/conversation/{{ draft.conversation_id }}" class="btn btn-view">
+                    Bekijk Gesprek
+                </a>
+            </div>
+
+            <div id="edit-area-{{ draft.id }}" class="edit-area" style="display: none;">
+                <textarea id="edit-text-{{ draft.id }}" rows="8" class="edit-textarea">{{ draft.content }}</textarea>
+                <div class="edit-buttons">
+                    <button onclick="saveEdit({{ draft.id }})" class="btn btn-approve">Opslaan & Goedkeuren</button>
+                    <button onclick="toggleEdit({{ draft.id }})" class="btn btn-cancel">Annuleren</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <div class="empty-icon">&#10003;</div>
+        <p>Alle concept antwoorden zijn beoordeeld!</p>
+        <a href="/dashboard" class="btn btn-primary">Terug naar Dashboard</a>
+    </div>
+    {% endif %}
+</div>
+
+{% block scripts %}
+<script>
+async function approveDraft(draftId) {
+    const res = await fetch(`/api/drafts/${draftId}/approve?reviewed_by=dashboard_agent`, { method: 'POST' });
+    if (res.ok) window.location.reload();
+    else alert('Er is een fout opgetreden bij het goedkeuren.');
+}
+
+async function rejectDraft(draftId) {
+    if (!confirm('Weet u zeker dat u dit concept antwoord wilt afwijzen?')) return;
+    const res = await fetch(`/api/drafts/${draftId}/reject?reviewed_by=dashboard_agent`, { method: 'POST' });
+    if (res.ok) window.location.reload();
+}
+
+function toggleEdit(draftId) {
+    const el = document.getElementById(`edit-area-${draftId}`);
+    el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+
+async function saveEdit(draftId) {
+    const content = document.getElementById(`edit-text-${draftId}`).value;
+    const res = await fetch(
+        `/api/drafts/${draftId}/edit?edited_content=${encodeURIComponent(content)}&reviewed_by=dashboard_agent`,
+        { method: 'POST' }
+    );
+    if (res.ok) window.location.reload();
+}
+</script>
+{% endblock %}
+{% endblock %}
