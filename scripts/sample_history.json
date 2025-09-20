@@ -1,0 +1,57 @@
+{
+  "conversations": [
+    {
+      "customer_name": "Anna Mulder",
+      "customer_email": "a.mulder@gmail.com",
+      "subject": "Bestelling annuleren",
+      "messages": [
+        {
+          "sender_type": "customer",
+          "content": "Goedemorgen, ik heb zojuist bestelling #10234 geplaatst maar ik wil deze graag annuleren. Is dit nog mogelijk?"
+        },
+        {
+          "sender_type": "agent",
+          "content": "Beste Anna,\n\nBedankt voor uw bericht. Uw bestelling #10234 is nog niet verzonden, dus annulering is nog mogelijk. Ik heb de annulering voor u in gang gezet. Het bedrag wordt binnen 3-5 werkdagen teruggestort op uw rekening.\n\nMet vriendelijke groet,\nKlantenservice"
+        }
+      ]
+    },
+    {
+      "customer_name": "Erik Visser",
+      "customer_email": "erik.v@outlook.nl",
+      "subject": "Garantieclaim koffiezetapparaat",
+      "messages": [
+        {
+          "sender_type": "customer",
+          "content": "Mijn koffiezetapparaat (aangekocht 6 maanden geleden, bestelling #8921) geeft een foutcode E3 en werkt niet meer. Dit valt toch onder garantie?"
+        },
+        {
+          "sender_type": "agent",
+          "content": "Beste Erik,\n\nVervelend om te horen dat uw koffiezetapparaat niet meer naar behoren werkt. Aangezien het product 6 maanden geleden is aangeschaft, valt dit inderdaad onder de garantie van 2 jaar.\n\nIk heb een garantieclaim voor u aangemaakt. U ontvangt binnen 24 uur een retourlabel per e-mail. Na ontvangst en inspectie sturen wij een vervangend apparaat of vergoeden wij het aankoopbedrag.\n\nMet vriendelijke groet,\nKlantenservice"
+        },
+        {
+          "sender_type": "customer",
+          "content": "Bedankt voor de snelle afhandeling! Ik heb het retourlabel ontvangen en het pakket ingeleverd."
+        },
+        {
+          "sender_type": "agent",
+          "content": "Beste Erik,\n\nFijn om te horen! Wij verwachten uw retour binnen 1-2 werkdagen te ontvangen. Na inspectie nemen wij direct contact met u op over de vervanging.\n\nMet vriendelijke groet,\nKlantenservice"
+        }
+      ]
+    },
+    {
+      "customer_name": "Lisa de Groot",
+      "customer_email": "lisa.degroot@ziggo.nl",
+      "subject": "Kortingscode werkt niet",
+      "messages": [
+        {
+          "sender_type": "customer",
+          "content": "Ik heb een kortingscode ZOMER20 ontvangen per e-mail maar deze wordt niet geaccepteerd bij het afrekenen. De code zou 20% korting moeten geven."
+        },
+        {
+          "sender_type": "agent",
+          "content": "Beste Lisa,\n\nExcuses voor het ongemak. Ik heb uw kortingscode gecontroleerd en het blijkt dat de code ZOMER20 geldig was tot en met 31 augustus. Helaas is deze verlopen.\n\nAls tegemoetkoming bied ik u graag een nieuwe kortingscode aan: HERFST15 voor 15% korting op uw volgende bestelling. Deze code is geldig tot en met 30 november.\n\nMet vriendelijke groet,\nKlantenservice"
+        }
+      ]
+    }
+  ]
+}
