@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 350" font-family="Segoe UI, sans-serif">
+  <rect width="800" height="350" fill="#f8f9fa" rx="10"/>
+  <text x="400" y="35" text-anchor="middle" font-size="18" font-weight="bold" fill="#1a73e8">Workflow - Klantbericht tot Antwoord</text>
+
+  <!-- Step 1 -->
+  <circle cx="80" cy="150" r="40" fill="#e3f2fd" stroke="#1a73e8" stroke-width="2"/>
+  <text x="80" y="145" text-anchor="middle" font-size="22" font-weight="bold" fill="#1a73e8">1</text>
+  <text x="80" y="165" text-anchor="middle" font-size="10" fill="#666">Ontvangst</text>
+  <text x="80" y="210" text-anchor="middle" font-size="11" font-weight="600" fill="#333">Klantbericht</text>
+  <text x="80" y="225" text-anchor="middle" font-size="10" fill="#666">via REST API</text>
+
+  <!-- Arrow 1-2 -->
+  <line x1="125" y1="150" x2="195" y2="150" stroke="#1a73e8" stroke-width="2"/>
+  <polygon points="195,145 205,150 195,155" fill="#1a73e8"/>
+
+  <!-- Step 2 -->
+  <circle cx="240" cy="150" r="40" fill="#fff3e0" stroke="#ff9800" stroke-width="2"/>
+  <text x="240" y="145" text-anchor="middle" font-size="22" font-weight="bold" fill="#ff9800">2</text>
+  <text x="240" y="165" text-anchor="middle" font-size="10" fill="#666">RAG</text>
+  <text x="240" y="210" text-anchor="middle" font-size="11" font-weight="600" fill="#333">Kennisbank</text>
+  <text x="240" y="225" text-anchor="middle" font-size="10" fill="#666">ChromaDB zoeken</text>
+
+  <!-- Arrow 2-3 -->
+  <line x1="285" y1="150" x2="355" y2="150" stroke="#ff9800" stroke-width="2"/>
+  <polygon points="355,145 365,150 355,155" fill="#ff9800"/>
+
+  <!-- Step 3 -->
+  <circle cx="400" cy="150" r="40" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/>
+  <text x="400" y="145" text-anchor="middle" font-size="22" font-weight="bold" fill="#4caf50">3</text>
+  <text x="400" y="165" text-anchor="middle" font-size="10" fill="#666">AI</text>
+  <text x="400" y="210" text-anchor="middle" font-size="11" font-weight="600" fill="#333">Concept Genereren</text>
+  <text x="400" y="225" text-anchor="middle" font-size="10" fill="#666">OpenAI GPT-4o-mini</text>
+
+  <!-- Arrow 3-4 -->
+  <line x1="445" y1="150" x2="515" y2="150" stroke="#4caf50" stroke-width="2"/>
+  <polygon points="515,145 525,150 515,155" fill="#4caf50"/>
+
+  <!-- Step 4 -->
+  <circle cx="560" cy="150" r="40" fill="#f3e5f5" stroke="#9c27b0" stroke-width="2"/>
+  <text x="560" y="145" text-anchor="middle" font-size="22" font-weight="bold" fill="#9c27b0">4</text>
+  <text x="560" y="165" text-anchor="middle" font-size="10" fill="#666">Review</text>
+  <text x="560" y="210" text-anchor="middle" font-size="11" font-weight="600" fill="#333">Medewerker</text>
+  <text x="560" y="225" text-anchor="middle" font-size="10" fill="#666">Goedkeuren / Bewerken</text>
+
+  <!-- Arrow 4-5 -->
+  <line x1="605" y1="150" x2="675" y2="150" stroke="#9c27b0" stroke-width="2"/>
+  <polygon points="675,145 685,150 675,155" fill="#9c27b0"/>
+
+  <!-- Step 5 -->
+  <circle cx="720" cy="150" r="40" fill="#e8eaf6" stroke="#3f51b5" stroke-width="2"/>
+  <text x="720" y="145" text-anchor="middle" font-size="22" font-weight="bold" fill="#3f51b5">5</text>
+  <text x="720" y="165" text-anchor="middle" font-size="10" fill="#666">Verstuur</text>
+  <text x="720" y="210" text-anchor="middle" font-size="11" font-weight="600" fill="#333">Antwoord</text>
+  <text x="720" y="225" text-anchor="middle" font-size="10" fill="#666">Naar klant</text>
+
+  <!-- Bottom description -->
+  <rect x="50" y="270" width="700" height="55" rx="8" fill="#fff" stroke="#e0e0e0"/>
+  <text x="400" y="295" text-anchor="middle" font-size="12" font-weight="600" fill="#333">Human-in-the-Loop: Elk AI-gegenereerd antwoord wordt beoordeeld door een medewerker voordat het wordt verstuurd</text>
+  <text x="400" y="312" text-anchor="middle" font-size="11" fill="#666">De medewerker kan het antwoord goedkeuren, bewerken of afwijzen en een nieuw concept laten genereren</text>
+</svg>
